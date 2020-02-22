@@ -1,6 +1,6 @@
-Some gotchas I found when doing this project-
-1- The 06-ci script uses PROD instead of DEV.
-1- Need to update sequelize to @canary or @next version to get it compile in .js (PROD).
+### Some gotchas I found when doing this project-
+1. The 06-ci script uses PROD instead of DEV.
+2. Need to update sequelize to @canary or @next version to get it compile in .js (PROD).
 
 # Udagram Image Filtering Microservice
 
