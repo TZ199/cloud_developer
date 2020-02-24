@@ -16,7 +16,7 @@ spec:
         api: external        
     spec:
       containers:
-      - image: jipsterious/udacity-frontend
+      - image: jipsterious/udacity-frontend:local
         name: frontend
         imagePullPolicy: Always          
         ports:

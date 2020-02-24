@@ -25,6 +25,8 @@
     "@ionic/angular": "^5.0.1",
     "core-js": "^3.6.4",
     "express": "^4.17.1",
+    "ionic": "^5.4.16",
+    "node-sass": "^4.13.1",
     "rxjs": "^6.5.4",
     "zone.js": "~0.10.2"
   },
