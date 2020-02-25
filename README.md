@@ -71,4 +71,4 @@ There is a script called `deploy.sh` that is already prepared and will roll out 
 2. Open a new terminal.  Run `kubectl port-forward svc/frontend 8100:8100`.
 3. Open another new terminal.  Run `kubectl port-forward svc/reverseproxy 8080:8080`
 
-This will deploy the kubernetes cluster.  To scale the cluster, run `kubectl scale --replicas=X deployment/<frontend,feed,user>`.
+This will deploy the kubernetes cluster.  To scale the cluster, run `kubectl scale --replicas=X deployment/<frontend,feed,user>`, where X= number of containers to run.
