@@ -66,6 +66,8 @@ To stop testing, run `docker-compose down`.
 ### Build and deploy to Kubernetes environment
 Navigate to `udacity-c3-deployment/k8s` directory.  Ensure you already have a kubernetes environment setup.  Look at all the .yaml files and modify the images to point to your docker hub.
 
+Please note if you have issues with reverseproxy rollout, it is likely an issue with CLusterIP.  Please refer to your k8s flavour for a fix.  I installed kubeDNS.
+
 There is a script called `deploy.sh` that is already prepared and will roll out the docker images to a kubernetes cluster.  Run the following commands:
 1. `deploy.sh`
 2. Open a new terminal.  Run `kubectl port-forward svc/frontend 8100:8100`.
