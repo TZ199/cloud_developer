@@ -1,34 +1,25 @@
 import 'source-map-support/register'
-import * as aws from 'aws-sdk'
+import { getUserId } from '../utils'
+import { createLogger } from '../../utils/logger'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
+import { getAllTodos } from '../../businessLogic/todos'
 
-const todoTable = process.env.TODOS_TABLE
+const logger = createLogger('getTodos.ts')
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-async getToDo(todoId: string, userId: string) => {
-    const params = {
-        TableName: this.todoTable,
-        IndexName: 
-        KeyConditionExpression: 'userId = :userId AND todoId = :todoId',
-        ExpressionAttributeValues: {
-            ':todoId': todoId,
-            ':userId': userId,
-        },
-        ScanIndexForward: false
-    };
-    const result = await this.docClient.query(params).promise();
-    const items = result.Items;
-    return items[0];
-    }
-};
+  logger.info('Going to event: ', event)
 
-await this.dynamoDBClient
-  .query({
-    TableName: 'table-name',
-    IndexName: 'index-name',
-    KeyConditionExpression: 'paritionKey = :paritionKey',
-    ExpressionAttributeValues: {
-      ':paritionKey': partitionKeyValue
-    }
-  })
-  .promise()
+  const user = getUserId(event)
+  const items = await getAllTodos(user)
+  
+  return {
+    statusCode: 201,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
+    },
+    body: JSON.stringify({
+      items
+    })
+  }
+}
