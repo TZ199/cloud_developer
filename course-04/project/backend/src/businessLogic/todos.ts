@@ -16,9 +16,7 @@ export async function getAllTodos(
 ): Promise<TodoItem[]> {
   logger.info('In function: getAllTodos()')
 
-  return await todoAccess.getAllTodos(
-    userId: user,
-  )
+  return await todoAccess.getAllTodos(user)
 }
 
 /** Create todo item function */
@@ -68,4 +66,4 @@ export async function deleteTodoItem(
     todoId: todoId,
   })
 }
-/**    attachmentUrl: attachment */
+

@@ -16,5 +16,12 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   await updateTodoItem(todoId, updateTodo, user)
 
   // TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
-  return undefined
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
+    },
+    body: undefined
+  }
 }
