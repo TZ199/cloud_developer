@@ -41,7 +41,7 @@ export async function createTodoItem(
     name: createTodoRequest.name,
     dueDate: createTodoRequest.dueDate,
     done: false,
-    attachmentUrl: await getUploadUrl(todoUUID),
+    attachmentUrl: `https://${bucketName}.s3.amazonaws.com/${todoUUID}`,
   })
   logger.info('Item value: ', item)
   return item

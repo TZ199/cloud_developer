@@ -15,7 +15,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   const newItem = await createTodoItem(newTodo, user)
   
   logger.info('Value of newItem ', newItem)
-  
+    
   return {
     statusCode: 201,
     headers: {
@@ -23,7 +23,9 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
       'Access-Control-Allow-Credentials': true
     },
     body: JSON.stringify({
-      newItem
+      item: {
+        ...newItem,
+      }
     })
   }
 }
