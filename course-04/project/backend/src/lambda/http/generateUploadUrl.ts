@@ -9,7 +9,8 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   logger.info('Going to event: ', event)
 
   const todoId = event.pathParameters.todoId
-  const url = await getUploadUrl(todoId)
+  const uploadUrl = await getUploadUrl(todoId)
+  logger.info('Generated URL: ', uploadUrl)
 
   return {
     statusCode: 201,
@@ -18,7 +19,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
       'Access-Control-Allow-Credentials': true
     },
     body: JSON.stringify({
-      url
+      uploadUrl
     })
   }
 }

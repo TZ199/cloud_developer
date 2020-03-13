@@ -43,7 +43,6 @@ export async function createTodoItem(
     done: false,
     attachmentUrl: `https://${bucketName}.s3.amazonaws.com/${todoUUID}`,
   })
-  logger.info('Item value: ', item)
   return item
 }
 
@@ -68,7 +67,7 @@ export async function deleteTodoItem(
   todoId: string,
   user: string
 ): Promise<TodoDelete> {
-  logger.info('In function: deleteTodoItem()')
+  logger.info('In function: deleteTodoItem()', todoId)
 
   return await todoAccess.deleteTodoItem({
     userId: user,
@@ -77,11 +76,11 @@ export async function deleteTodoItem(
 }
 
 export async function getUploadUrl(todoId: string) {
-  logger.info('Function getUploadUrl')
+  logger.info('Function getUploadUrl', todoId)
   
   return s3.getSignedUrl('putObject', {
     Bucket: bucketName,
     Key: todoId,
-    Expires: urlExpiration
+    Expires: parseInt(urlExpiration)
   })
 }
