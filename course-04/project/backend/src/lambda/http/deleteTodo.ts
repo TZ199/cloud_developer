@@ -11,7 +11,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     
   const todoId = event.pathParameters.todoId
   const user = getUserId(event)
-  await deleteTodoItem(todoId, user)
+  const item = await deleteTodoItem(todoId, user)
   
   return {
     statusCode: 200,
@@ -19,6 +19,8 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true
     },
-    body: ""
+    body: JSON.stringify({
+      item
+    })
   }
 }
