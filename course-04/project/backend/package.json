@@ -9,6 +9,7 @@
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
     "middy": "^0.27.1",
+    "serverless-plugin-tracing": "^2.0.0",
     "source-map-support": "^0.5.16",
     "uuid": "^3.4.0",
     "winston": "^3.2.1"
