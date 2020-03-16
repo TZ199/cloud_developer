@@ -1,5 +1,4 @@
 import * as uuid from 'uuid'
-import * as AWS from 'aws-sdk'
 import { TodoItem } from '../models/TodoItem'
 import { TodoUpdate } from '../models/TodoUpdate'
 import { TodoDelete } from '../models/TodoDelete'
@@ -8,12 +7,14 @@ import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 import { createLogger } from '../utils/logger'
 
+var xray = require('aws-xray-sdk')
+
 const bucketName = process.env.IMAGES_S3_BUCKET
 const urlExpiration = process.env.SIGNED_URL_EXPIRATION
 const todoAccess = new TodoAccess()
 const logger = createLogger('todos.ts')
 
-const s3 = new AWS.S3({
+const s3 = new xray.s3({
   signatureVersion: 'v4'
 })
 

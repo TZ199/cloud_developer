@@ -4,8 +4,9 @@ service:
 plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
-#  - serverless-reqvalidator-plugin
-#  - serverless-aws-documentation
+  - serverless-reqvalidator-plugin
+  - serverless-aws-documentation
+  - serverless-plugin-tracing
   
 package:
   individually: true
@@ -13,6 +14,14 @@ package:
 provider:
   name: aws
   runtime: nodejs12.x
+  tracing: true
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
 
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'ap-southeast-1'}
@@ -23,6 +32,21 @@ provider:
     SIGNED_URL_EXPIRATION: 300
 #    AUTH_0_SECRET_ID: Auth0Secret-${self:provider.stage}
 #    AUTH_0_SECRET_FIELD: auth0Secret
+
+custom:
+  documentation:
+    api:
+      info:
+        version: v1.0.0
+        title: todo-app API
+        description: todo-app - validate incoming requests
+    models:
+      - name: CreateTodo
+        contentType: application/json
+        schema: ${file(models/create-todo-model.json)}
+      - name: UpdateTodo
+        contentType: application/json
+        schema: ${file(models/update-todo-model.json)}
 
 functions:
   Auth:
@@ -55,6 +79,12 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Create new todo
+            description: create new todo
+            requestModels:
+              'application/json': CreateTodo
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -73,6 +103,12 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer: Auth
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Create new todo
+            description: create new todo
+            requestModels:
+              'application/json': UpdateTodo
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -179,3 +215,12 @@ resources:
         ResponseType: DEFAULT_4XX
         RestApiId:
           Ref: ApiGatewayRestApi
+
+    RequestBodyValidator:
+      Type: AWS::ApiGateway::RequestValidator
+      Properties:
+        Name: 'request-body-validator'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: false

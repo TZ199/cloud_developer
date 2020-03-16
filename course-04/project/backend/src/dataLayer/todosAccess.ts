@@ -1,8 +1,9 @@
-import * as AWS  from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { TodoItem } from '../models/TodoItem'
 import { TodoUpdate } from '../models/TodoUpdate'
 import { TodoDelete } from '../models/TodoDelete'
+
+var xray = require('aws-xray-sdk')
 
 export class TodoAccess {
   constructor(
@@ -62,5 +63,5 @@ export class TodoAccess {
 
 /** Create Dynamo Db */
 function createDynamoDBClient() {
-  return new AWS.DynamoDB.DocumentClient()
+  return new xray.DynamoDB.DocumentClient()
 }
